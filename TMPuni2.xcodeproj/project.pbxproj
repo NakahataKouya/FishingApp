@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		06A93AB912FD0A7E006C7195 /* FISH-icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 06A93AB812FD0A7E006C7195 /* FISH-icon.jpg */; };
 		1D3623260D0F684500981E51 /* TMPuni2AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* TMPuni2AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		06A93AB812FD0A7E006C7195 /* FISH-icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "FISH-icon.jpg"; path = "../FISH-icon.jpg"; sourceTree = SOURCE_ROOT; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* TMPuni2AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMPuni2AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* TMPuni2AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMPuni2AppDelegate.m; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				06A93AB812FD0A7E006C7195 /* FISH-icon.jpg */,
 				215928E512A4C35C007932EE /* TM.png */,
 				21FC15EE12A26932001927B9 /* TM.jpg */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
@@ -174,6 +177,7 @@
 				21FC15E412A268D1001927B9 /* MyTMImageViewController.xib in Resources */,
 				21FC15EF12A26932001927B9 /* TM.jpg in Resources */,
 				215928E612A4C35C007932EE /* TM.png in Resources */,
+				06A93AB912FD0A7E006C7195 /* FISH-icon.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -28,7 +28,8 @@
 
 
 @implementation MyTMImageViewController
-int m_tm_x_a;
+double m_tm_x_a;
+double m_tm_y_a;
 
 - (void) startTM {
 	
@@ -37,6 +38,9 @@ int m_tm_x_a;
 	
 	m_tm_x = m_tm.center.x - m_defaultTMWidth/2;
 	m_tm_y = m_tm.center.y - m_defaultTMHeight/2;
+	
+	//魚さんは消しておくよ
+	m_fish.hidden = true ;
 	
 	[self performSelector:@selector(updateTM) withObject:nil afterDelay:PARAM_FRAMERATE];
 }
@@ -48,20 +52,27 @@ int m_tm_x_a;
 	m_tm_height = m_tm.frame.size.height;
 	
 	
-	//重力
-	m_verticalPow += PARAM_GRAVITY;
 	
+	//重力
+	//m_verticalPow += PARAM_GRAVITY;
+	//あいぽんの傾きでアイコンが動くよ
+	m_horizontalPow += m_tm_x_a;
+	m_verticalPow -= m_tm_y_a;
 	
 	//下向きの力がデカかったら最大値で切る(空気抵抗?)
 	if (PARAM_MAX_POW < m_verticalPow) {
 		m_verticalPow = PARAM_MAX_POW;
 	}
 	
+	//上向きの力がデカかったら最大値で切る(空気抵抗?)
+	if (-1 * PARAM_MAX_POW > m_verticalPow) {
+		m_verticalPow = -1 * PARAM_MAX_POW;
+	}
 	
 	
 	//下の限界
-	if (self.view.frame.size.height < m_tm.frame.origin.y + m_tm.frame.size.height) {
-		m_tm_y = self.view.frame.size.height - m_tm.frame.size.height;
+	if (self.view.frame.size.height +100 < m_tm.frame.origin.y + m_tm.frame.size.height) {
+		m_tm_y = self.view.frame.size.height - m_tm.frame.size.height + 100;
 		
 		//ぶつかったら力が減衰して反対側に。弾む。
 		m_verticalPow = -m_verticalPow * PARAM_REDUCE_POW_RATE;
@@ -71,6 +82,17 @@ int m_tm_x_a;
 		m_tm_height = m_tm_height*PARAM_SHOCK_HEIGHT_RATE;
 	}
 	
+	//上の限界
+	if (-10 > m_tm.frame.origin.y) {
+		m_tm_y = -10;
+		
+		//ぶつかったら力が減衰して反対側に。弾む。
+		//m_verticalPow = -m_verticalPow * PARAM_REDUCE_POW_RATE;
+		
+		
+		//地面にぶつかったら上下に弾む
+		m_tm_height = m_tm_height*PARAM_SHOCK_HEIGHT_RATE;
+	}
 	
 	//左右のはみ出し限界、TMさんが左右どっちにより大きくはみ出しているかチェック
 	float insertDepth = 0;
@@ -116,9 +138,9 @@ int m_tm_x_a;
 	}
 	
 	//存在している力で移動
-	//m_tm_x += m_horizontalPow;
-	m_tm_x += (int) (m_tm_x_a * 100);
-	m_tm_y += m_verticalPow;
+	m_tm_x += m_horizontalPow; //+ m_tm_x_a * 10;
+	//m_tm_x += (int) (m_tm_x_a * 100);
+	m_tm_y += m_verticalPow; //- m_tm_y_a * 10;
 	
 	
 	//TMさんのサイズを元に戻します (初期のサイズに収束するような式)
@@ -173,8 +195,16 @@ int m_tm_x_a;
  */
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	//TMさんに対するタッチだったら
+	
 	if ([event touchesForView:m_tm]) {
 		[self setTMSize:PARAM_TOUCHED_TM_SIZE];
+		
+		//NSLog([NSString stringWithFormat:@"before: tm%@ fish%@ tmp%@",m_tm.image,m_fish.image,m_tmp]);
+		m_tmp = m_tm.image;
+		//NSLog([NSString stringWithFormat:@"%@",m_tm.image]);
+		m_tm.image = m_fish.image;
+		m_fish.image = m_tmp;
+		//NSLog([NSString stringWithFormat:@"after: tm%@ fish%@ tmp%@",m_tm.image,m_fish.image,m_tmp]);
 	}
 }
 
@@ -225,9 +255,21 @@ int m_tm_x_a;
 - (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
 {
 	m_tm_x_a = acceleration.x;
-	NSLog([NSString stringWithFormat:@"x:%f",acceleration.x]);
-	NSLog([NSString stringWithFormat:@"y:%f",acceleration.y]);
-	NSLog([NSString stringWithFormat:@"z:%f",acceleration.z]);
+	m_tm_y_a = acceleration.y;
+	
+	//z方向に振ったら画像が変わるよ
+	if(acceleration.z > 1.2){
+		m_tmp = m_tm.image;
+		//NSLog([NSString stringWithFormat:@"%@",m_tm.image]);
+		m_tm.image = m_fish.image;
+		m_fish.image = m_tmp;
+		[self setTMSize:PARAM_TOUCHED_TM_SIZE];
+	}		
+		
+	
+	//NSLog([NSString stringWithFormat:@"x:%f",acceleration.x]);
+	//NSLog([NSString stringWithFormat:@"y:%f",acceleration.y]);
+	//NSLog([NSString stringWithFormat:@"z:%f",acceleration.z]);
 	
 }
 	

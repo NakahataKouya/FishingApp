@@ -20,7 +20,9 @@
 	BOOL shaking;
 
 	IBOutlet UIImageView * m_tm;
-	
+	IBOutlet UIImageView * m_fish;
+	UIImage * m_tmp;
+
 	//TMさんのXとY位置
 	float m_tm_x;
 	float m_tm_y;
