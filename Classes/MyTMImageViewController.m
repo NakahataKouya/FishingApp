@@ -197,14 +197,17 @@ double m_tm_y_a;
 	//TMさんに対するタッチだったら
 	
 	if ([event touchesForView:m_tm]) {
-		[self setTMSize:PARAM_TOUCHED_TM_SIZE];
+		if(m_tm_x > 80 - m_tm.frame.size.width && m_tm_x < 240)
+			if(m_tm_y > 160 - m_tm.frame.size.height && m_tm_y < 320){
+				[self setTMSize:PARAM_TOUCHED_TM_SIZE];
 		
-		//NSLog([NSString stringWithFormat:@"before: tm%@ fish%@ tmp%@",m_tm.image,m_fish.image,m_tmp]);
-		m_tmp = m_tm.image;
-		//NSLog([NSString stringWithFormat:@"%@",m_tm.image]);
-		m_tm.image = m_fish.image;
-		m_fish.image = m_tmp;
-		//NSLog([NSString stringWithFormat:@"after: tm%@ fish%@ tmp%@",m_tm.image,m_fish.image,m_tmp]);
+				//NSLog([NSString stringWithFormat:@"before: tm%@ fish%@ tmp%@",m_tm.image,m_fish.image,m_tmp]);
+				m_tmp = m_tm.image;
+				//NSLog([NSString stringWithFormat:@"%@",m_tm.image]);
+				m_tm.image = m_fish.image;
+				m_fish.image = m_tmp;
+				//NSLog([NSString stringWithFormat:@"after: tm%@ fish%@ tmp%@",m_tm.image,m_fish.image,m_tmp]);
+			}
 	}
 }
 
